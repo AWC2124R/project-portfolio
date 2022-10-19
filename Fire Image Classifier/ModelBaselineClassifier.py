@@ -52,7 +52,6 @@ test_labels = np.array(test_labels, dtype=np.float64)
 train_images = train_images / 255.0
 test_images = test_images / 255.0
 
-# imagenet VGG16 준비
 pre_trained_vgg = VGG19(weights='imagenet', include_top=False, input_shape=(360//10, 640//10, 3))
 pre_trained_vgg.trainable = False
 
