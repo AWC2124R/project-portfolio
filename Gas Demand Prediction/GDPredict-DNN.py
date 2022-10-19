@@ -60,3 +60,5 @@ model.add(Dense(1, activation='sigmoid'))
 
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
 model.fit(trainX, trainY, epochs=150, batch_size=10, verbose=1)
+
+# The code for lookback data generation was modified and taken from [ https://towardsdatascience.com/one-step-predictions-with-lstm-forecasting-hotel-revenues-c9ef0d3ef2df ].
