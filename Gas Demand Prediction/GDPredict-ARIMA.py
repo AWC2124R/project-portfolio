@@ -40,3 +40,5 @@ for t in range(N):
 
     predictions.append(yhat)
     history.append(obs)
+ 
+# Rolling forecast ARIMA model modified and taken from [ https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python/ ].
