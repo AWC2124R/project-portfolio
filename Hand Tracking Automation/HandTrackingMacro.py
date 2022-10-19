@@ -110,3 +110,5 @@ while True:
     # Show frame
     cv2.imshow("_videoCapture - IMG", img)
     cv2.waitKey(1)
+
+# Portions of this code were built on code from [ https://www.section.io/engineering-education/creating-a-hand-tracking-module/ ].
