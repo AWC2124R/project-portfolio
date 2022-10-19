@@ -33,7 +33,7 @@ beforeVD = False
 currentlyVU = False
 currentlyVD = False
 
-DIST_THRESHOLD = 0.1
+DIST_THRESHOLD = 0.075
 Y_MOVEMENT_THRESHOLD = 0.05
 
 # Loop for tracking / main loop
