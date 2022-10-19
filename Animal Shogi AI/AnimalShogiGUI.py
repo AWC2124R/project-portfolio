@@ -8,13 +8,13 @@ pygame.init()  # initiate pygame
 pygame.display.set_caption('12장기')  # set the window name
 
 
-WINDOW_WIDTH = 1536
-WINDOW_HEIGHT = 864
-WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)  # set up window size
-WIDTH = int(WINDOW_WIDTH / 6)
-HEIGHT = int(WINDOW_HEIGHT / 5)
+WW = 1536
+WH = 864
+WINDOW_SIZE = (WW, WH)  # set up window size
+WIDTH = int(WW / 6)
+HEIGHT = int(WH / 5)
 
-GRID_WIDTH = 5
+GRIDW = 5
 
 fps = 60
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)  # initiate screen
@@ -523,8 +523,8 @@ while True:
             D2 = Square('D2', [4, 2])
             D3 = Square('D3', [4, 3])
 
-            pygame.draw.rect(screen, (100, 100, 100), [0, 0, WINDOW_WIDTH, HEIGHT])
-            pygame.draw.rect(screen, (100, 100, 100), [0, HEIGHT * 4, WINDOW_WIDTH, HEIGHT])
+            pygame.draw.rect(screen, (100, 100, 100), [0, 0, WW, HEIGHT])
+            pygame.draw.rect(screen, (100, 100, 100), [0, HEIGHT * 4, WW, HEIGHT])
 
             if turn_player == RED:
                 pygame.draw.rect(screen, (175, 71, 74), [0, HEIGHT, WIDTH, HEIGHT * 3])
@@ -731,21 +731,24 @@ while True:
             draw_text("3", fontsmall, WHITE, screen, int(WIDTH * 2.5), HEIGHT * 4 + 20)
             draw_text("2", fontsmall, WHITE, screen, int(WIDTH * 3.5), HEIGHT * 4 + 20)
             draw_text("1", fontsmall, WHITE, screen, int(WIDTH * 4.5), HEIGHT * 4 + 20)
+
             if selected_piece != None:
                 pygame.draw.rect(screen, (90, 90, 90), [selected_piece.square.cord[0] * WIDTH, selected_piece.square.cord[1] * HEIGHT, WIDTH, HEIGHT])
 
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT], [WIDTH, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 2, HEIGHT], [WIDTH * 2, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 3, HEIGHT], [WIDTH * 3, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 4, HEIGHT], [WIDTH * 4, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 5, HEIGHT], [WIDTH * 5, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT + int(GRID_WIDTH / 2)], [WIDTH * 5, HEIGHT + int(GRID_WIDTH / 2)], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 2], [WIDTH * 5, HEIGHT * 2], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 3], [WIDTH * 5, HEIGHT * 3], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 4 - int(GRID_WIDTH / 2) - 1], [WIDTH * 5, HEIGHT * 4 - int(GRID_WIDTH / 2) - 1], GRID_WIDTH)
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT], [WIDTH, WH - HEIGHT - GRIDW], GRIDW)
 
-            pygame.draw.line(screen, WHITE, [0, HEIGHT], [WINDOW_WIDTH, HEIGHT], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [0, HEIGHT * 4], [WINDOW_WIDTH, HEIGHT * 4], GRID_WIDTH)
+            for i in range(2, 6):
+                pygame.draw.line(screen, WHITE, [WIDTH * i, HEIGHT], [WIDTH * i, WH - HEIGHT - GRIDW], GRIDW)
+
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT + int(GRIDW / 2)], [WIDTH * 5, HEIGHT + int(GRIDW / 2)], GRIDW)
+
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 2], [WIDTH * 5, HEIGHT * 2], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 3], [WIDTH * 5, HEIGHT * 3], GRIDW)
+
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 4 - int(GRIDW / 2) - 1], [WIDTH * 5, HEIGHT * 4 - int(GRIDW / 2) - 1], GRIDW)
+
+            pygame.draw.line(screen, WHITE, [0, HEIGHT], [WW, HEIGHT], GRIDW)
+            pygame.draw.line(screen, WHITE, [0, HEIGHT * 4], [WW, HEIGHT * 4], GRIDW)
 
             for piece in pieces:
                 piece.draw()
@@ -784,18 +787,18 @@ while True:
             draw_text("2", fontsmall, WHITE, screen, int(WIDTH * 3.5), HEIGHT * 4 + 20)
             draw_text("1", fontsmall, WHITE, screen, int(WIDTH * 4.5), HEIGHT * 4 + 20)
 
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT], [WIDTH, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 2, HEIGHT], [WIDTH * 2, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 3, HEIGHT], [WIDTH * 3, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 4, HEIGHT], [WIDTH * 4, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH * 5, HEIGHT], [WIDTH * 5, WINDOW_HEIGHT - HEIGHT - GRID_WIDTH], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT + int(GRID_WIDTH / 2)], [WIDTH * 5, HEIGHT + int(GRID_WIDTH / 2)], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 2], [WIDTH * 5, HEIGHT * 2], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 3], [WIDTH * 5, HEIGHT * 3], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 4 - int(GRID_WIDTH / 2) - 1], [WIDTH * 5, HEIGHT * 4 - int(GRID_WIDTH / 2) - 1], GRID_WIDTH)
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT], [WIDTH, WH - HEIGHT - GRIDW], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH * 2, HEIGHT], [WIDTH * 2, WH - HEIGHT - GRIDW], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH * 3, HEIGHT], [WIDTH * 3, WH - HEIGHT - GRIDW], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH * 4, HEIGHT], [WIDTH * 4, WH - HEIGHT - GRIDW], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH * 5, HEIGHT], [WIDTH * 5, WH - HEIGHT - GRIDW], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT + int(GRIDW / 2)], [WIDTH * 5, HEIGHT + int(GRIDW / 2)], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 2], [WIDTH * 5, HEIGHT * 2], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 3], [WIDTH * 5, HEIGHT * 3], GRIDW)
+            pygame.draw.line(screen, WHITE, [WIDTH, HEIGHT * 4 - int(GRIDW / 2) - 1], [WIDTH * 5, HEIGHT * 4 - int(GRIDW / 2) - 1], GRIDW)
 
-            pygame.draw.line(screen, WHITE, [0, HEIGHT], [WINDOW_WIDTH, HEIGHT], GRID_WIDTH)
-            pygame.draw.line(screen, WHITE, [0, HEIGHT * 4], [WINDOW_WIDTH, HEIGHT * 4], GRID_WIDTH)
+            pygame.draw.line(screen, WHITE, [0, HEIGHT], [WW, HEIGHT], GRIDW)
+            pygame.draw.line(screen, WHITE, [0, HEIGHT * 4], [WW, HEIGHT * 4], GRIDW)
 
             for piece in pieces:
                 piece.draw()
@@ -803,9 +806,9 @@ while True:
                     selected_piece = piece
 
             if turn_player == BLUE:
-                draw_text('Blue Wins!', font, (50, 80, 200), screen, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+                draw_text('Blue Wins!', font, (50, 80, 200), screen, WW / 2, WH / 2)
             elif turn_player == RED:
-                draw_text('Red Wins!', font, (240, 50, 50), screen, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+                draw_text('Red Wins!', font, (240, 50, 50), screen, WW / 2, WH / 2)
 
         pygame.display.update()
         clock.tick(fps)
