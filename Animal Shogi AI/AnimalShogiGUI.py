@@ -1,23 +1,22 @@
 import sys
 import pygame
-import os
 from pygame.locals import *
 clock = pygame.time.Clock()
 
-pygame.init()  # initiate pygame
-pygame.display.set_caption('12장기')  # set the window name
+pygame.init()
+pygame.display.set_caption('12장기')
 
 
 WW = 1536
 WH = 864
-WINDOW_SIZE = (WW, WH)  # set up window size
+WINDOW_SIZE = (WW, WH)
 WIDTH = int(WW / 6)
 HEIGHT = int(WH / 5)
 
 GRIDW = 5
 
 fps = 60
-screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)  # initiate screen
+screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 display = pygame.Surface((300, 200))
 
 WHITE = (255, 255, 255)
@@ -58,7 +57,7 @@ class Square:
             self.color = (71, 175, 255)
         self.rect = pygame.Rect(int(self.pos[0]), int(self.pos[1]), WIDTH, HEIGHT)
         pygame.draw.rect(screen, self.color, self.rect)
-        # draw_text(self.name, font, WHITE, screen, self.pos[0], self.pos[1])
+
 
 
 class Piece:
@@ -246,7 +245,7 @@ def can_go(piece1):
                 available['equal'].append((go_x, go_y))
             elif reverse_Board[(go_x, go_y)].piece.color != piece1.color:
                 available['differ'].append((go_x, go_y))
-            # available.append(reverse_Board[(go_x,go_y)])
+
     return available
 
 
@@ -374,7 +373,7 @@ while True:
     selected_area = None
     selected_piece = None
 
-    color = {(255, 0, 0): '빨강', (0, 0, 255): '파랑'}
+    color = {(255, 0, 0): 'red', (0, 0, 255): 'blue'}
     prison_num = {Chick: 0, Elephant: 1, Giraffe: 2, Hen: 0}
     prison_y = {RED: 0, BLUE: 4}
 
@@ -409,8 +408,8 @@ while True:
             if ai_moved and len(ai_move) != 0:
                 print(ai_move)
                 if ai_move[0] != "0":
-                    ai_piece = ""  # ai_move[:2]
-                    ai_area = ""  # ai_move[2:]
+                    ai_piece = ""
+                    ai_area = ""
                     ai_piece += str(5 - int(ai_move[1]))
                     if ai_move[0] == "a":
                         ai_piece += "1"
@@ -534,26 +533,26 @@ while True:
                 pygame.draw.rect(screen, (51, 155, 175), [WIDTH * 5, HEIGHT, WIDTH, HEIGHT * 3])
 
             if event.type == MOUSEBUTTONDOWN or ai_moved:
-                if ai_moved or event.button == 1:  # 좌클릭
+                if ai_moved or event.button == 1:
                     if ai_moved:
                         pass
                     else:
                         pos = pygame.mouse.get_pos()
-                        # print('{0} 좌표에서 마우스 클릭이 감지됨'.format(pos))
+
                         selected_area = area_select(pos)
-                    if (selected_area != None) or ai_moved:  # 선택된 구역이 있을 경우
-                        # print('{0}칸이 선택되었습니다.'.format(selected_area))
-                        if selected_piece != None and selected_piece.color == turn_player:  # 선택된 말이 있을 경우
+                    if (selected_area != None) or ai_moved:
+
+                        if selected_piece != None and selected_piece.color == turn_player:
                             if selected_area[1] not in [0, 4]:
                                 if selected_piece.square.cord[1] != 0 and selected_piece.square.cord[1] != 4:
-                                    if tuple(selected_area) in can_go(selected_piece)['none']:  # 아무 말도 없는 곳일 경우
-                                        # print('{0}말이 선택되었습니다.'.format(selected_piece))  # 선택된 조각 출력
+                                    if tuple(selected_area) in can_go(selected_piece)['none']:
+
                                         text = "RED: " + cordtoc(selected_piece.square.cord) + cordtoc(selected_area) if turn_player == RED else "BLUE: " + cordtoc(selected_piece.square.cord) + cordtoc(selected_area)
                                         if (player_color == "RED" and RED == turn_player) or (player_color == "BLUE" and BLUE == turn_player):
                                             pytoc = open(PYTOC_FILE, "a")
                                             pytoc.write(cordtoc(selected_piece.square.cord) + cordtoc(selected_area) + "\n")
                                             pytoc.close()
-                                        # print(selected_piece.square.cord, selected_area)
+
                                         if isinstance(selected_piece, Chick) and selected_piece.square.cord[0] == (3 if turn_player == RED else 2):
                                             if turn_player == RED:
                                                 for i in range(len(pieces)):
@@ -573,36 +572,35 @@ while True:
                                                 hen_BLUE = Hen(BLUE, selected_piece.square)
                                                 pieces.append(hen_BLUE)
                                                 selected_piece = hen_BLUE
-                                        selected_piece.square.piece = None  # 선택된 조각이 있던 칸의 정보에서 piece를 제거
-                                        reverse_Board[tuple(selected_piece.square.cord)].piece = None  # 리버스 보드에서 칸의 piece를 지움
-                                        selected_piece.set_pos(reverse_Board[tuple(selected_area)])  # 선택한 곳으로 piece의 칸은 바꿈
-                                        reverse_Board[tuple(selected_area)].piece = selected_piece  # 리버스 보드에서 선택한 곳에 piece를 추가
+                                        selected_piece.square.piece = None
+                                        reverse_Board[tuple(selected_piece.square.cord)].piece = None
+                                        selected_piece.set_pos(reverse_Board[tuple(selected_area)])
+                                        reverse_Board[tuple(selected_area)].piece = selected_piece
 
                                         turn_switch(turn_player)
-                                        # print('{0}에서 {1}으로 턴이 전환되었습니다.'.format(color[turn_player], color[turn_switch(turn_player)]))
+
                                         if king2times() != None:
                                             isking2 = True
-                                    elif tuple(selected_area) in can_go(selected_piece)['equal']:  # 같은 색 말일 경우
-                                        selected_piece = reverse_Board[tuple(selected_area)].piece  # 대상 말 바꿈
-                                        # print('공격 말이 {0}으로 변경되었습니다.'.format(selected_piece))
+                                    elif tuple(selected_area) in can_go(selected_piece)['equal']:
+                                        selected_piece = reverse_Board[tuple(selected_area)].piece
 
-                                    elif tuple(selected_area) in can_go(selected_piece)['differ']:  # 다른 색 말일 경우
+                                    elif tuple(selected_area) in can_go(selected_piece)['differ']:
                                         text = "RED: " + cordtoc(selected_piece.square.cord) + cordtoc(selected_area) if turn_player == RED else "BLUE: " + cordtoc(selected_piece.square.cord) + cordtoc(selected_area)
                                         if (player_color == "RED" and RED == turn_player) or (player_color == "BLUE" and BLUE == turn_player):
                                             pytoc = open(PYTOC_FILE, "a")
                                             pytoc.write(cordtoc(selected_piece.square.cord) + cordtoc(selected_area) + "\n")
                                             pytoc.close()
                                         if type(reverse_Board[tuple(selected_area)].piece) == Lion:
-                                            pieces.remove(reverse_Board[tuple(selected_area)].piece)  # 상대 말을 피스 목록에서 제거
-                                            reverse_Board[tuple(selected_area)].piece = None  # 리버스 보드 정보에서 말을 제거
-                                            selected_piece.square.piece = None  # 선택된 조각이 있던 칸의 정보에서 piece를 제거
-                                            reverse_Board[tuple(selected_piece.square.cord)].piece = None  # 리버스 보드에서 움직이려는 말이 있던 칸에서 말을 지룸
-                                            selected_piece.set_pos(reverse_Board[tuple(selected_area)])  # 선택한 곳으로 piece의 칸을 바꿈
-                                            reverse_Board[tuple(selected_area)].piece = selected_piece  # 리버스 보드에서 선택한 곳에 piece를 추가
+                                            pieces.remove(reverse_Board[tuple(selected_area)].piece)
+                                            reverse_Board[tuple(selected_area)].piece = None
+                                            selected_piece.square.piece = None
+                                            reverse_Board[tuple(selected_piece.square.cord)].piece = None
+                                            selected_piece.set_pos(reverse_Board[tuple(selected_area)])
+                                            reverse_Board[tuple(selected_area)].piece = selected_piece
                                             continue
                                         else:
                                             goodbye(type(reverse_Board[tuple(selected_area)].piece))
-                                        # print(prisoners)
+
                                         if isinstance(selected_piece, Chick) and selected_piece.square.cord[0] == (3 if turn_player == RED else 2):
                                             if turn_player == RED:
                                                 for i in range(len(pieces)):
@@ -622,21 +620,20 @@ while True:
                                                 hen_BLUE = Hen(BLUE, selected_piece.square)
                                                 pieces.append(hen_BLUE)
                                                 selected_piece = hen_BLUE
-                                        pieces.remove(reverse_Board[tuple(selected_area)].piece)  # 상대 말을 피스 목록에서 제거
-                                        reverse_Board[tuple(selected_area)].piece = None  # 리버스 보드 정보에서 말을 제거
-                                        selected_piece.square.piece = None  # 선택된 조각이 있던 칸의 정보에서 piece를 제거
-                                        reverse_Board[tuple(selected_piece.square.cord)].piece = None  # 리버스 보드에서 움직이려는 말이 있던 칸에서 말을 지룸
-                                        selected_piece.set_pos(reverse_Board[tuple(selected_area)])  # 선택한 곳으로 piece의 칸을 바꿈
-                                        reverse_Board[tuple(selected_area)].piece = selected_piece  # 리버스 보드에서 선택한 곳에 piece를 추가
+                                        pieces.remove(reverse_Board[tuple(selected_area)].piece)
+                                        reverse_Board[tuple(selected_area)].piece = None
+                                        selected_piece.square.piece = None
+                                        reverse_Board[tuple(selected_piece.square.cord)].piece = None
+                                        selected_piece.set_pos(reverse_Board[tuple(selected_area)])
+                                        reverse_Board[tuple(selected_area)].piece = selected_piece
                                         turn_switch(turn_player)
-                                        # print('{0}에서 {1}으로 턴이 전환되었습니다.'.format(color[turn_player], color[turn_switch(turn_player)]))
-                                        # print(prisoners)
+
                                         if king2times() != None:
                                             isking2 = True
                                 elif selected_piece.square.cord[1] == 0 or selected_piece.square.cord[1] == 4:
                                     if reverse_Board[tuple(selected_area)].piece == None:
                                         char = ""
-                                        # print(selected_piece)
+
                                         if isinstance(selected_piece, Chick):
                                             char = "p"
                                         elif isinstance(selected_piece, Elephant):
@@ -648,7 +645,7 @@ while True:
                                             pytoc = open(PYTOC_FILE, "a")
                                             pytoc.write("0" + char + cordtoc(selected_area) + "\n")
                                             pytoc.close()
-                                        selected_piece.square.piece = None  # 포로로 잡힌 말의 칸에서 말의 정보 제거
+                                        selected_piece.square.piece = None
                                         reverse_Board[tuple(selected_area)].piece = selected_piece
                                         selected_piece.set_pos(reverse_Board[tuple(selected_area)])
                                         prisoners[selected_piece.color].remove(selected_piece)
@@ -658,7 +655,7 @@ while True:
                                             isking2 = True
                                 elif turn_player == reverse_Board[tuple(selected_area)].piece.color:
                                     selected_piece = reverse_Board[tuple(selected_area)].piece
-                                    reverse_Board[tuple(selected_area)].piece = selected_piece  # 리버스 보드에서 선택한 곳에 piece를 추가
+                                    reverse_Board[tuple(selected_area)].piece = selected_piece
 
                             elif selected_area[1] in [0, 4]:
                                 for prisoner in prisoners[RED]:
@@ -668,7 +665,7 @@ while True:
                                     if prisoner.square.cord == selected_area:
                                         selected_piece = prisoner
 
-                        else:  # 선택된 말이 없을 경우
+                        else:
                             for piece in pieces:
                                 if piece.square.cord == selected_area:
                                     selected_piece = piece
@@ -679,48 +676,6 @@ while True:
                                 if prisoner.square.cord == selected_area:
                                     selected_piece = prisoner
 
-                            # print(type(selected_piece))
-                            # print('{0}피스가 선택됨'.format(selected_piece))
-            '''
-            if fly_high_jujak() != None:
-                print(selected_piece)
-                if fly_high_jujak() == RED:
-                    for i in range(len(pieces)):
-                        if isinstance(pieces[i], Chick):
-                            if pieces[i].color == RED:
-                                jujak_square = pieces[i].square
-                    try:
-                        pieces.remove(chick_RED)
-                    except:
-                        for i in range(len(pieces)):
-                            if isinstance(pieces[i], Chick):
-                                if pieces[i].color == RED:
-                                    del pieces[i]
-                                    break
-    
-                    hen_RED = Hen(RED, jujak_square)
-                    jujak_square.piece = hen_RED
-                    pieces.append(hen_RED)
-    
-                else:
-                    for i in range(len(pieces)):
-                        if isinstance(pieces[i], Chick):
-                            if pieces[i].color == BLUE:
-                                jujak_square = pieces[i].square
-                    try:
-                        pieces.remove(chick_BLUE)
-                    except:
-                        for i in range(len(pieces)):
-                            if isinstance(pieces[i], Chick):
-                                if pieces[i].color == BLUE:
-                                    del pieces[i]
-                                    break
-                    hen_BLUE = Hen(BLUE, jujak_square)
-                    jujak_square.piece = hen_BLUE
-                    pieces.append(hen_BLUE)
-            '''
-
-            '''예준쓰 라인'''
             draw_text(text, fontsmall, WHITE, screen, WIDTH * 3, 10)
 
             draw_text("a", fontsmall, WHITE, screen, WIDTH * 5 + 20, int(HEIGHT * 1.5))
@@ -770,12 +725,11 @@ while True:
 
         else:
             if event.type == MOUSEBUTTONDOWN:
-                if event.button == 1:  # 좌클릭
+                if event.button == 1:
                     ctopy = open(PYTOC_FILE, "w")
                     ctopy.close()
-                    # sys.exit()
                     break
-            # screen.fill((0, 0, 0))5
+
             draw_text(text, fontsmall, WHITE, screen, WIDTH * 3, 10)
 
             draw_text("a", fontsmall, WHITE, screen, WIDTH * 5 + 20, int(HEIGHT * 1.5))
