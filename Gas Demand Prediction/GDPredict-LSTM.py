@@ -66,3 +66,5 @@ model.add(Dense(units = 1))
 
 model.compile(optimizer = 'adam', loss = 'mean_squared_error')
 model.fit(trainX, trainY, epochs = 2, batch_size = 32, verbose=2)
+
+# The code for lookback data generation was taken from [ https://towardsdatascience.com/one-step-predictions-with-lstm-forecasting-hotel-revenues-c9ef0d3ef2df ].
