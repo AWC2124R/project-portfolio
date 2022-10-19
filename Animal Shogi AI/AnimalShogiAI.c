@@ -2481,3 +2481,7 @@ void person_to_computer(int c) {
     x = 0;
   } while (x == 0);
 }
+
+// Negamax algorithm with alpha-beta pruning code was built opon and taken from a Japanese Github Source that I cannot find through google.
+// I am unsure if the code has been taken down, or it is not showing up on my results due to it being in Japanese.
+// Queries such as "どうぶつしょうぎ AI", "animal shogi negamax", etc seem to give different results.
